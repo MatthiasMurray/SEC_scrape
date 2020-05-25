@@ -30,6 +30,8 @@ def xml_links(list10qlinks):
     for tag in taglist:
       if 'htm.xml' in str(tag.text):
         data_links.append((tag.get('href'),o[1],o[2]))
+  
+  driver.quit()
 
   return data_links
 
@@ -38,6 +40,7 @@ def xml_source(listxmllinks):
   drivepath = '/usr/local/bin/chromedriver'
   secpath = 'https://www.sec.gov'
   driver = webdriver.Chrome(drivepath)
+  driver.set_page_load_timeout(1000)
 
   for d in listxmllinks:
     driver.get(secpath + d[0])
@@ -51,4 +54,6 @@ def xml_source(listxmllinks):
     dataxml = driver.page_source
     data_full.append((dataxml,d[0],d[1],d[2]))
   
+  driver.quit()
+
   return data_full

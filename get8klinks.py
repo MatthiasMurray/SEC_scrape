@@ -91,21 +91,27 @@ def links(ticks):
     taglist=[tag for tag in soup.find_all('td')]
 
     for tag in taglist:
-      if len(tag.contents) < 1:
+      if len(tag.contents)<1:
         pass
       else:
         if tag.contents[0] == '10-Q':
-          c=1
-        elif c==1:
-          link = tag.contents[0].get('href')
-          c+=1
-        elif c==2:
-          c+=1
-        elif c==3:
-          date = tag.contents[0]
-          c=0
-          out.append((link,tick,date))
-
+          is10q = True
+          c = 1
+        if is10q:
+          if 'Documents' in str(tag.contents[0]):
+            link = tag.contents[0].get('href')
+            c += 1
+          elif 'Interactive Data' in str(tag.contents[0]):
+            c += 1
+          elif c == 3:
+            c += 1
+          elif c == 4:
+            date = tag.contents[0]
+            out.append((link,tick,date))
+            is10q = False
+            c = 0
+            link = ''
+            date = ''
     time.sleep(1)
   
   driver.quit()
