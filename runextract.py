@@ -3,6 +3,29 @@ import numpy as np
 from extract_data import *
 from scrape_utils import *
 import sys
+import pandas as pd
+from useapi import *
+from label_filename import *
+
+##experimental addition trying to label as we scrape##
+def highestmonth(x):
+  date = ''.join(x.split('-'))
+  year = int(date[:4])
+  month = int(date[4:6])
+ 
+  if np.mod(month,3)==0:
+    out = month-3
+  else:
+    out = month-np.mod(month,3)
+
+  if out == 0:
+    year -= 1
+    return [year,12]
+  else:
+    return [year,out]
+
+hm = highestmonth(str(pd.datetime.now())[:10])
+##end experimental addition
 
 companies = pd.read_csv('/Users/Matthias/Downloads/companylist.csv')
 bigticklist = list(companies.Symbol)
@@ -28,7 +51,20 @@ for i in range(len(ticklist)):
   scrape_path = '/Users/Matthias/Documents/LexisNexis/SEC_10qs/scraped_files/'
 
   for x in xmldata:
-    xml_file = open(scrape_path+foldpath(sectlist[i])+'/'+x[2].lower()+'_'+fixdate(x[-1])+'_10q.xml','w')
+    fname = x[2].lower()+'_'+fixdate(x[-1])+'_10q.xml'
+
+    ##experimental code to label as we scrape
+    step1 = fname.split('_')
+    year = int(step1[1][:4])
+    month = int(step1[1][4:6])
+    if year <= hm[0] and month <= hm[1]:
+      newf = label_fileName(fname)
+    else:
+      newf = fname[:-4]+'_THISQ.xml'
+    ##end experimental code
+
+    ##xml_file = open(scrape_path+foldpath(sectlist[i])+'/'+x[2].lower()+'_'+fixdate(x[-1])+'_10q.xml','w')
+    xml_file = open(scrape_path+foldpath(sectlist[i])+'/'+newf,'w')
     xml_file.write(x[0])
     xml_file.close()
 
