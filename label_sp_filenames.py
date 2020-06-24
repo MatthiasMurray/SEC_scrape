@@ -1,7 +1,23 @@
 from useapi import *
 
 def label_fileName(origName):
-  step1 = origName.split('_')
+
+  def midtrim(s):
+    out=''
+    for c in s:
+      if c!=' ':
+        out+=c
+    return out
+
+  def fixdate(s):
+    out=''
+    parts = s.split('_')
+    date = parts[1]
+    
+
+  trimName = midtrim(origName)
+  #step1 = origName.split('_')
+  step1 = trimName.split('_')
   tick = step1[0]
   date = step1[1]
   year = int(date[:4])
