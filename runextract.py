@@ -57,7 +57,7 @@ for i in range(len(ticklist)):
     step1 = fname.split('_')
     year = int(step1[1][:4])
     month = int(step1[1][4:6])
-    if year <= hm[0] and month <= hm[1]:
+    if (year == hm[0] and month <= hm[1]) or year < hm[0]:
       newf = label_fileName(fname)
     else:
       newf = fname[:-4]+'_THISQ.xml'
