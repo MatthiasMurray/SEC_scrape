@@ -29,13 +29,16 @@ def fix_thisqdate(x):
 for fold in os.listdir(scraped_files):
   if fold=='.DS_Store':
     pass
-  print()
-  print()
-  print('starting new folder:')
-  print(fold)
-  print()
-  print()
+  
   else:
+
+    print()
+    print()
+    print('starting new folder:')
+    print(fold)
+    print()
+    print()
+  
     foldlist = os.listdir(scraped_files+fold)
     L = len(foldlist)
     #for f in os.listdir(scraped_files+fold):
