@@ -68,7 +68,7 @@ def xml_source(listxmllinks):
     except:
       pass
     
-    time.sleep(10)
+    time.sleep(2)
     dataxml = driver.page_source
     if '<html xmlns' in dataxml[:200]:
         print('ERROR: html xmlns')
