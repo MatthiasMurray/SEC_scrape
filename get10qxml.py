@@ -57,7 +57,7 @@ def xml_source(listxmllinks):
   drivepath = '/usr/local/bin/chromedriver'
   secpath = 'https://www.sec.gov'
   driver = webdriver.Chrome(drivepath)
-  driver.set_page_load_timeout(1000)
+  driver.set_page_load_timeout(1800)
 
   for d in listxmllinks:
     driver.get(secpath + d[0])
